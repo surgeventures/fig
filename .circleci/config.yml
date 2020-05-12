@@ -1,0 +1,29 @@
+version: 2.1
+description: "Testing fig"
+
+orbs:
+  ruby: "circleci/ruby@0.1.2"
+
+jobs:
+  test:
+    parameters:
+      ruby-version:
+        type: string
+    docker:
+      - image: "circleci/ruby:<< parameters.ruby-version >>"
+    steps:
+      - "checkout"
+      - "ruby/load-cache"
+      - "ruby/bundle-install"
+      - "ruby/test"
+      - "store_test_results":
+          path: "/tmp/test-results"
+      - "ruby/save-cache"
+
+workflows:
+  all-tests:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              ruby-version: ["2.4.7", "2.5.8", "2.6.6"]
