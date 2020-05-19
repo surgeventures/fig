@@ -86,7 +86,7 @@ module Fig
     end
 
     # Get the value of the setting, as set on the configuration object `instance`
-    def get(instance)
+    private def get(instance)
       instance.send(:instance_variable_get, ivar_name)
     end
 
@@ -98,6 +98,28 @@ module Fig
     # Check if the setting has a set value on the configuration object `instance`
     def defined?(instance)
       instance.send(:instance_variable_defined?, ivar_name)
+    end
+
+    # Get the value of the setting, as set on the configuration object `instance`;
+    # If no value is present, the default value will be set
+    def get_or_set_default!(instance)
+      set!(instance, default(instance)) unless self.defined?(instance)
+
+      get(instance)
+    end
+
+    # Finalize the setting
+    def finalize!(instance)
+      setting = self
+
+      # Make sure the default is computed before finalizing
+      get_or_set_default!(instance).freeze
+
+      instance.define_singleton_method(setter_name) do |_|
+        raise Errors::FinalizedConfiguration.new(:setting_name => setting.name)
+      end
+
+      self.freeze
     end
 
     # Tries to coerce a value to the setting's type, returning a `Dry::Types::Result`
@@ -116,9 +138,7 @@ module Fig
       setting = self
 
       klass.send(:define_method, getter_name) do
-        setting.set!(self, setting.default(self)) unless setting.defined?(self)
-
-        setting.get(self)
+        setting.get_or_set_default!(self)
       end
     end
 

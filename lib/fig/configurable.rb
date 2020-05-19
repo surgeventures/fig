@@ -67,7 +67,7 @@ module Fig
       self.class.settings
     end
 
-    # Initialize this setting object, this makes sure that settind descriptors are initialized first
+    # Initialize this setting object, this makes sure that setting descriptors are initialized first
     def initialize(*args)
       self.class.send(:build_settings!)
 
@@ -89,6 +89,13 @@ module Fig
       end
 
       raise Fig::Errors::InvalidConfiguration.new(:invalid_settings => invalid_settings) unless invalid_settings.empty?
+    end
+
+    # Finalize the configuration, preventing unwanted modification
+    def finalize!
+      settings.each { |setting| setting.finalize!(self) }
+      settings.freeze
+      freeze
     end
   end
 end

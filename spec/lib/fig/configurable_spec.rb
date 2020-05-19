@@ -150,15 +150,6 @@ RSpec.describe Fig::Configurable do
 
             expect(subject.with_computed_default).to eq(4)
           end
-
-          it "the default is only computed once" do
-            setting = subject.settings.find { |setting| setting.name == :with_computed_default }
-
-            expect(setting).to receive(:default).once
-
-            subject.with_computed_default
-            subject.with_computed_default
-          end
         end
       end
     end
