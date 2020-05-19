@@ -14,4 +14,3 @@ RSpec.describe Fig::Loader::Dsl do
     end
   end
 end
-
