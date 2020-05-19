@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fig (0.1.0)
+    fig (0.2.0)
       addressable (~> 2.5)
       dry-equalizer (~> 0.3.0)
       dry-types (~> 0.12.0)
