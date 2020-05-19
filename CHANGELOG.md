@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Configurations can now be finalized by calling `#finalize!` on them.
+- Configurations can now be protected from unwanted changes by calling `#finalize!` on them.
 
 ## [0.1.0] - 2020-05-12
 ### Added

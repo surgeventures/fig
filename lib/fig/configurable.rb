@@ -91,7 +91,7 @@ module Fig
       raise Fig::Errors::InvalidConfiguration.new(:invalid_settings => invalid_settings) unless invalid_settings.empty?
     end
 
-    # Finalize the configuration
+    # Finalize the configuration, preventing unwanted modification
     def finalize!
       settings.each { |setting| setting.finalize!(self) }
       settings.freeze
