@@ -11,5 +11,11 @@ module Fig
         super("Invalid settings in config:\n  #{invalid_settings.join("\n  ")}\n")
       end
     end
+
+    class FinalizedConfiguration < Error
+      def initialize
+        super("Cannot modify a finalized configuration!")
+      end
+    end
   end
 end
