@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Configurations can now be protected from unwanted changes by calling `#finalize!` on them.
+- Configurations can now be protected from unwanted changes by calling `#finalize!` on them,
+- Loader instance can now be queried for the loaders it's configured with using `#loader`,
+- Configuration can now be converted to a hash using `to_h`.
 
 ## [0.1.0] - 2020-05-12
 ### Added

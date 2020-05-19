@@ -97,5 +97,9 @@ module Fig
       settings.freeze
       freeze
     end
+
+    def to_h
+      settings.map { |setting| [setting.name, send(setting.getter_name)] }.to_h
+    end
   end
 end

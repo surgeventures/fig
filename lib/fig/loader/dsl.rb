@@ -45,6 +45,11 @@ module Fig
         end
       end
 
+      # Get loaders
+      def loaders
+        @loaders
+      end
+
       # Load the configuration, returning a configuration object with the settings filled in
       def load!
         klass         = self.class._configuration_class
