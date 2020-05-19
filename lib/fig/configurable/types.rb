@@ -10,8 +10,6 @@ module Fig
     include ::Dry::Types.module
     include ::Dry::Types.module::Form
 
-    # A coercible URI
-    URI = Constructor(::Addressable::URI, Coercions.method(:to_uri))
     # A coercible symbol
     Symbol = Symbol.constructor(Coercions.method(:to_sym))
     # A coercible bool extended to admit enabled/disabled
@@ -26,6 +24,13 @@ module Fig
           coercion = proc { |value| Coercions.to_ary(value, separator) }
 
           super(member).constructor(coercion)
+        end
+
+        # A coercible URI; this is coerced
+        def URI(**hints)
+          coercion = proc { |value| Coercions.to_uri(value, :hints => hints) }
+
+          Constructor(::Addressable::URI, coercion)
         end
       end)
     end
