@@ -55,7 +55,7 @@ See comments in the builder class or usage examples in the tests for further det
 
 ### Setting types
 
-The library uses `dry-types` to define setting types. Types are provided in `Fig::Types`, which is automatically included with `Fig::Configurable` for convenience. The types use the `Form` coercions and provide following additional types:
+The library uses `dry-types` to define setting types. Types are provided in `Fig::Types`, which is automatically included with `Fig::Configurable` for convenience. The types use the `Params` coercions and provide following additional types:
 
   * `URI` – coerces a string to `Addressable::URI`,
   * `Symbol` – coerces a string to a Ruby symbol,
