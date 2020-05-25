@@ -7,8 +7,9 @@ require_relative "./coercions"
 module Fig
   # Custom types for configuration settings
   module Types
-    include ::Dry::Types.module
-    include ::Dry::Types.module::Form
+    include ::Dry.Types(:strict, :params)
+    include Strict
+    include Params
 
     # A coercible URI
     URI = Constructor(::Addressable::URI, Coercions.method(:to_uri))
@@ -18,7 +19,7 @@ module Fig
     #
     # NOTE: it doesn't work without safe, but I'm unsure why as dry-types doesn't seem to explain itself.
     #       My hunch is it has to do with the fact that Bool is defined as an ADT of True | False, but might be wrong
-    Bool = ::Dry::Types.module::Form::Bool.constructor(Coercions.method(:enablement_to_bool)).safe
+    Bool = Params::Bool.constructor(Coercions.method(:enablement_to_bool)).safe
     class << self
       prepend(Module.new do
         # An array, coercible from a separated string

@@ -16,7 +16,7 @@ module ConfigurationFixtures
   class Coercion
     include Fig::Configurable
 
-    setting(:numeric).type(Types::Int)
+    setting(:numeric).type(Types::Integer)
   end
 
   class Required
@@ -28,7 +28,7 @@ module ConfigurationFixtures
   class RequiredWithType
     include Fig::Configurable
 
-    setting(:numerics).type(Types::Array(Types::Int)).required
+    setting(:numerics).type(Types::Array(Types::Integer)).required
   end
 
   class ComputedRequired
