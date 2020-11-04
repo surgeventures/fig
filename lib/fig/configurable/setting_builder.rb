@@ -4,8 +4,10 @@ module Fig
   # A builder class for a setting descriptor
   class SettingBuilder
     # Setting with a name, this is required
-    def name(name)
+    def name(name, defaults: {})
       @name = name
+
+      @required = defaults[:required] if defaults.has_key?(:required)
 
       self
     end
@@ -51,15 +53,26 @@ module Fig
       self
     end
 
+    # A convenient alias for a negated version of `required` if you're working with
+    # a required-by-default config. To wit, it will make a value non-required when called
+    # or when the block returns true.
+    def optional(optional = true, &block)
+      if block_given?
+        required(!optional) { !block.call() }
+      else
+        required(!optional)
+      end
+    end
+
     # Builds a setting descriptor
     def build!
       Setting.new(
-        name:             @name,
-        type:             @type,
-        default:          @default,
-        compute_default:  @compute_default,
-        required:         @required,
-        compute_required: @compute_required
+        :name             => @name,
+        :type             => @type,
+        :default          => @default,
+        :compute_default  => @compute_default,
+        :required         => @required,
+        :compute_required => @compute_required
       )
     end
   end

@@ -8,6 +8,14 @@ RSpec.describe Fig::Configurable do
       expect(subject).to respond_to(:setting)
     end
 
+    it "provides the `required_by_default!` macro" do
+      expect(subject).to respond_to(:required_by_default!)
+    end
+
+    it "provides the `required_by_default!` macro" do
+      expect(subject).to respond_to(:optional_by_default!)
+    end
+
     it "provides the `settings` method on the class" do
       expect(subject).to respond_to(:settings)
     end
@@ -163,6 +171,25 @@ RSpec.describe Fig::Configurable do
         expect(subject.settings.map(&:name)).to contain_exactly(:test)
       end
     end
+
+    describe "#required_by_default!" do
+      subject { ConfigurationFixtures::RequiredByDefault.new }
+
+      context "validating configuration" do
+        it "fails if the value of the required setting is missing" do
+          expect { subject.validate! }.to raise_error(Fig::Errors::InvalidConfiguration) do |error|
+            expect(error.invalid_settings).to     include(:required)
+            expect(error.invalid_settings).not_to include(:overriden_to_optional)
+          end
+        end
+
+        it "passes if the value of the required setting is present" do
+          subject.required = "Gnawing Hunger"
+
+          expect { subject.validate! }.not_to raise_error
+        end
+      end
+    end
   end
 
   describe "instance methods" do
@@ -198,7 +225,7 @@ RSpec.describe Fig::Configurable do
           expect { subject.validate! }.to raise_error(Fig::Errors::InvalidConfiguration)
         end
 
-        it "the raised exception contains infomration on which settings are invalid" do
+        it "the raised exception contains information on which settings are invalid" do
           subject.numerics = "insert some clever popculture reference here"
 
           expect { subject.validate! }.to raise_error do |error|
