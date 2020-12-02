@@ -17,9 +17,9 @@ module Fig
     Symbol = Symbol.constructor(Coercions.method(:to_sym))
     # A coercible bool extended to admit enabled/disabled
     #
-    # NOTE: it doesn't work without safe, but I'm unsure why as dry-types doesn't seem to explain itself.
+    # NOTE: it doesn't work without `#lax``, but I'm unsure why as dry-types doesn't seem to explain itself.
     #       My hunch is it has to do with the fact that Bool is defined as an ADT of True | False, but might be wrong
-    Bool = Params::Bool.constructor(Coercions.method(:enablement_to_bool)).safe
+    Bool = Params::Bool.constructor(Coercions.method(:enablement_to_bool)).lax
     class << self
       prepend(Module.new do
         # An array, coercible from a separated string
