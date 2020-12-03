@@ -38,6 +38,18 @@ end
 
 This will provide you with a getter method `#some_setting` and a setter method `#some_setting=`.
 
+By default all settings are optional, unless otherwise specified with a `required` modifier. You can change the default by calling the `required_by_default!` class macro:
+
+```ruby
+class SomeAppConfiguration
+  include Fig::Configurable
+
+  required_by_default!
+
+  setting(:some_setting)
+end
+```
+
 ### Configuration setting options
 
 A configuration setting has to be named using a symbol and has a few options to configure it's behaviour:
@@ -49,7 +61,7 @@ setting(:the_answer)                      # what is the name of the setting?    
   .required { |config| config.answered? } # is the setting required for the application to work? (optional)
 ```
 
-The setting is configured by calling methods on `Fig::SettingBuilder` instance returned by the `setting` macro. The `default` and `required` options can be called with either a static value as the single parameter, or a block computing the value on demand (the block will be provided with the instance of the config, should you require to derivce the value from some other setting).
+The setting is configured by calling methods on `Fig::SettingBuilder` instance returned by the `setting` macro. The `default` and `required` options can be called with either a static value as the single parameter, or a block computing the value on demand (the block will be provided with the instance of the config, should you require to derivce the value from some other setting). As a convenience for working with a required-by-default config a negated version of `required` is available as `optional`.
 
 See comments in the builder class or usage examples in the tests for further details.
 

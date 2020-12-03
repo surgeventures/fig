@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Configurations can now opt-in to all settings being required-by-default with `required_by_default!`.
+
 ## [0.2.0] - 2020-05-19
 ### Added
 - Configurations can now be protected from unwanted changes by calling `#finalize!` on them,

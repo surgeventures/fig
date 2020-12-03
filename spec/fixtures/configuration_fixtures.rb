@@ -50,4 +50,13 @@ module ConfigurationFixtures
     setting(:with_default).default(13.37)
     setting(:with_computed_default).default { |config| config.with_default * 2 }
   end
+
+  class RequiredByDefault
+    include Fig::Configurable
+
+    required_by_default!
+
+    setting(:required)
+    setting(:overriden_to_optional).optional
+  end
 end

@@ -14,6 +14,8 @@ module Fig
     def self.included(klass)
       klass.const_set("Types", Types)
       klass.instance_variable_set(:@__settings_mutex__, Mutex.new)
+      klass.instance_variable_set(:@__setting_defaults__, {})
+      klass.instance_variable_set(:@__setting_builders__, [])
       # We use prepend here, so that we make sure that setting descriptors
       # are always initialiazed first
       klass.singleton_class.prepend(PrependedClassMethods)
@@ -23,7 +25,7 @@ module Fig
       # Get settings defined for this configuration class, the settings are
       # instances of the setting descriptor class `Setting`
       def settings
-        @settings
+        @__settings__
       end
 
       # A class macro to define a setting, for valid setting options
@@ -37,18 +39,28 @@ module Fig
       #     .required { |config| config.test_enabled? }
       #   ```
       def setting(name)
-        setting_builder = SettingBuilder.new.name(name)
+        setting_builder = SettingBuilder.new.name(name, :defaults => @__setting_defaults__)
 
-        (@setting_builders ||= []) << setting_builder
+        @__setting_builders__ << setting_builder
 
         setting_builder
+      end
+
+      # Make all settings required by default
+      def required_by_default!
+        @__setting_defaults__[:required] = true
+      end
+
+      # Make all settings optional by default
+      def optional_by_default!
+        @__setting_defaults__[:required] = false
       end
 
       # A thread-safe method to initialize setting descriptors for a given class
       private def build_settings!
         @__settings_mutex__.synchronize do
-          @settings ||= begin
-            result = @setting_builders.map do |builder|
+          @__settings__ ||= begin
+            result = @__setting_builders__.map do |builder|
               setting = builder.build!
 
               setting.define_methods!(self)
