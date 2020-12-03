@@ -12,7 +12,7 @@ RSpec.describe Fig::Configurable do
       expect(subject).to respond_to(:required_by_default!)
     end
 
-    it "provides the `required_by_default!` macro" do
+    it "provides the `optional_by_default!` macro" do
       expect(subject).to respond_to(:optional_by_default!)
     end
 
