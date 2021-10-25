@@ -7,9 +7,9 @@ require_relative "./coercions"
 module Fig
   # Custom types for configuration settings
   module Types
-    include ::Dry.Types(:strict, :params)
-    include Strict
-    include Params
+    include ::Dry::Types.module
+    include ::Dry::Types.module::Strict
+    include ::Dry::Types.module::Params
 
     # A coercible URI
     URI = Constructor(::Addressable::URI, Coercions.method(:to_uri))
