@@ -4,7 +4,7 @@ PATH
     fig (0.3.0)
       addressable (~> 2.5)
       dry-equalizer (~> 0.3.0)
-      dry-types (~> 0.14.0)
+      dry-types (~> 0.13.0)
 
 GEM
   remote: https://rubygems.org/
@@ -29,13 +29,13 @@ GEM
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.2)
       dry-equalizer (~> 0.2)
-    dry-types (0.14.1)
+    dry-types (0.13.4)
       concurrent-ruby (~> 1.0)
       dry-container (~> 0.3)
       dry-core (~> 0.4, >= 0.4.4)
       dry-equalizer (~> 0.2)
       dry-inflector (~> 0.1, >= 0.1.2)
-      dry-logic (~> 0.5, >= 0.5)
+      dry-logic (~> 0.4, >= 0.4.2)
     method_source (1.0.0)
     pry (0.13.1)
       coderay (~> 1.1)
